@@ -1,0 +1,24 @@
+#!/bin/sh
+#Media server shutdown compliments from Jon Watte
+
+NAME=es18xx
+CONFIG_DIR=/boot/home/config/add-ons/kernel/drivers
+BIN_DIR=$CONFIG_DIR/bin
+RAW_DIR=$CONFIG_DIR/dev/audio/raw
+OLD_DIR=$CONFIG_DIR/dev/audio/old
+
+cd `dirname "$0"`
+
+rm -f $BIN_DIR/$NAME
+rm -f $RAW_DIR/$NAME
+rm -f $OLD_DIR/$NAME
+
+if [ `alert "Driver uinstalled. Do you want to restart the Media Server now? " "No" "Yes"` = "Yes" ]; then
+	kill -HUP media_server
+	sleep 5
+	kill -9 media_server
+	kill -9 media_addon_server
+	kill -9 audio_server
+	if [ -x /bin/rescan ]; then rescan es18xx; fi
+	/system/servers/media_server >/dev/null &
+fi

@@ -1,0 +1,70 @@
+ESS 1688 Sound Driver v0.43
+Stefan Werner <stefan@keindesign.de>
+13.3.2001
+
+This is a Sound driver for the ESS 1688 AudioDrive Chip in my ThinkPad 365XD running
+BeOS R5. I did not test it on any other machines, so I hope you can give me some feedback.
+Currently it doesn't do more than play 44.1kHz 16 bit stereo sound - sometimes. It doesn't
+provide recording or MIDI functionality yet. It has a quite bad performance on my TP,
+playing mp3 in CL-Amp takes all the CPU (Pentium 120MHz) and sometimes it stutters
+or even remains completely silent. Looks like the IRQ-Handler skips some IRQs...
+
+This driver is basically a slightly modified ESS18xx driver from Paul Yu, that's why
+I decided to put the original ReadMe file below and use the same verson number.
+
+Version 0.43, first public release
+
+ES18xx Sound Driver v0.43
+Paul Yu <pcky@bigpond.com>
+28th November, 2000
+
+This is a sound driver for ES18xx based cards on the Be® Operating System. It is believed to work with the 1868, 1869, 1878, and 1879 chipsets.
+ 
+This driver is based on Joseph Wang's Audio Drive driver. The driver had an initialisation problem that was introduced when the driver was updated. I merely put some code from a previous version back into the driver.
+
+The installation will prompt you to remove the third party Audio Drive (Joseph Wang), ES1869 (Fernando Francisco de Oliveira), and Sound Blaster Pro (Joseph Wang) drivers on your system.
+
+Anyone who wishes to further develop the driver is welcome to take up the cause.
+
+Versions
+0.43 - synchronized with 0.41a and replaced code relating to write_state in pcm.c from 0.22a
+0.42a - essentially version 0.22a with SNTIME of 500ms
+
+Audio Drive Driver v0.41a
+Joseph Wang <joe@timewarp.net>
+4/2/00
+
+Installation
+Double click on the file "install".  This will copy the driver the "~/config/add-ons/kernel/drivers/bin" and
+link this to "~/config/add-ons/kernel/drivers/dev/audio/raw" and "~/config/add-ons/kernel/drivers/dev/audio/old".  If you have a version of the sound blaster pro driver, it will ask if you want to deinstall the sound blaster pro driver (recommended if you are replacing your driver).
+
+Bugs
+Playback and CD-ROM support only.
+Sound Distortion
+The installer may not work if you have already installed another driver in which case you should reboot.
+
+References
+ES1879 Data Sheet
+The Configuration Manager, Part 1, Victor Tsou's December 1998 Be Newsletter article
+
+Greets
+Mom, Dad
+Jon Watte for the sonic_vibes source code and the spiffy installation script
+Kenny Carruthers for his excellent Postmaster
+Be for introducing BeOS and the BeBox
+
+Mail
+If you use this driver or source code, send me mail.  If you would like to comment or critcize this driver or source code, send me mail.
+
+Versions
+0.41a - Took the gain down a notch.
+0.4a - BeOS 5.0 version.  Fixed occasional stuttering problem.
+0.31a - boosted output.  fixed DAC media control.
+0.3a - support for audio drive chips.  corrected dac controls.
+0.22a - fixed install script.  using up-to-date source.
+0.21a - support for ess1878
+0.2a - Fixed driver initialization bug
+0.1a - Initial Release
+
+Trademarks
+Be and BeOS are trademarks of Be Incorporated.
