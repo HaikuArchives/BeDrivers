@@ -1,0 +1,79 @@
+AD1816(A) audio-driver for the Be Operating System R4 (and later).
+
+(C) 1998-2001 Jens Winkler <jwin@gmx.net>
+
+Notes for the experimental AD1816A-driver:
+
+- to install the driver run the "install.sh"-script,
+- to uninstall the "uninstall.sh" script.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+if you update from a pre-1.1a version, you have to rerun
+the "install.sh"-script to activate midi support
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+This driver should work with any PnP ISA soundboard that is
+based on the Analog Devices AD1816 chipset. It only checks
+for the logical device id, so it should be vendor-independent.
+
+This software is an experimental release.
+No responsibility is taken for any part of the software or any harm
+it might do to your system.
+
+Known limitations:
+- single dma mode is not (and will most certainly never be) supported
+- only one card is supported (due to lack of hw resources on PC MBs having
+  more than one AD1816 card is out of the question)
+
+-----------
+History:
+
+changes in release 1.3:
+- fixed serveral SMP related bugs in the isr
+- fixed jitter correction for capture
+- removed spinlocks from transfer startup code
+
+changes in release 1.2:
+- capture was broken with BeOS R5 - fixed
+- configuration and register locks are now Benaphores
+- changed the link names of the driver from 'ad1816' to
+  'ad1816/1' to comply with the Be naming convention
+- correct sample time with interrupt latency to
+  compensate for jitter
+
+changes in release 1.1a:
+- fixed broken midi-link in the install-script
+  (thanks to Florian Faber for pointing this one out)
+
+changes in release 1.1:
+- added support for the midi port (BeOS 4.5 and later)
+- fixed broken capture support
+- fixed a bug which leads to 'crunchy' sound after doing
+  'Restart Media Services'
+- removed unused sample-format conversions
+- cleanups in init/pnp code
+- inline assembly memcpy() uses mmx if supported
+
+changes in release 1.0i:
+- changed the playback code to do just doublebuffering (for latency
+  reasons) instead of prefetching up to 8 buffers 
+- changed size of dma buffers to 4k
+- fixed a bug in the buffer size negotiation code to make it work with
+  the upcoming 4.5 (aka genki) release
+- removed unused 8237 register definitions
+- appended ".sh" to the script names to avoid confusion with the 
+  equally named "install" and "uninstall" command-line programs
+
+changes in release 1.0h:
+- fixed a minor bug in the ISR which caused system beeps not being
+  played correctly
+- several cleanups in pnp code
+
+changes in release 1.0g:
+- first public release with source code included
+- fixed several bugs with calculating the correct "sample_clock"
+  values (this was undocumented in the R4 BeBook...) 
+
+before 1.0g:
+- binary release only
+- "beta" status
