@@ -1,0 +1,53 @@
+#!/bin/sh
+#by Joseph Wang
+#Media server shutdown compliments from Jon Watte
+
+NAME=es18xx
+CONFIG_DIR=/boot/home/config/add-ons/kernel/drivers
+BIN_DIR=$CONFIG_DIR/bin
+RAW_DIR=$CONFIG_DIR/dev/audio/raw
+OLD_DIR=$CONFIG_DIR/dev/audio/old
+
+cd `dirname "$0"`
+
+mkdir -p $BIN_DIR $RAW_DIR $OLD_DIR
+cp -f $NAME $BIN_DIR/$NAME
+ln -sf $BIN_DIR/$NAME $RAW_DIR/$NAME
+ln -sf $BIN_DIR/$NAME $OLD_DIR/$NAME
+
+if [ -e $HOME/config/add-ons/kernel/drivers/bin/sbpro ] && [ `alert \
+		"You have a Sound Blaster Pro driver installed.  Would You like this removed?" \
+		"No" "Yes"` = "Yes" ]; then
+	rm $HOME/config/add-ons/kernel/drivers/bin/sbpro
+	rm $HOME/config/add-ons/kernel/drivers/dev/audio/raw/sbpro
+	rm $HOME/config/add-ons/kernel/drivers/dev/audio/old/sbpro
+	rm $HOME/config/settings/sbpro
+fi
+
+if [ -e $HOME/config/add-ons/kernel/drivers/bin/AudioDrive ] && [ `alert \
+		"You have an Audio Drive driver installed.  Would You like this removed?" \
+		"No" "Yes"` = "Yes" ]; then
+	rm $HOME/config/add-ons/kernel/drivers/bin/AudioDrive
+	rm $HOME/config/add-ons/kernel/drivers/dev/audio/raw/AudioDrive
+	rm $HOME/config/add-ons/kernel/drivers/dev/audio/old/AudioDrive
+	rm $HOME/config/settings/AudioDrive
+	fi
+
+if [ -e $HOME/config/add-ons/kernel/drivers/bin/ess1869 ] && [ `alert \
+		"You have an ESS1869 driver installed.  Would You like this removed?" \
+		"No" "Yes"` = "Yes" ]; then
+	rm $HOME/config/add-ons/kernel/drivers/bin/ess1869
+	rm $HOME/config/add-ons/kernel/drivers/dev/audio/raw/ess1869
+	rm $HOME/config/add-ons/kernel/drivers/dev/audio/old/ess1869
+	rm $HOME/config/settings/ess1869
+	fi
+
+if [ `alert "Installation finished. If you had other drivers installed may need to reboot. Do you want to restart the Media Server now? " "No" "Yes"` = "Yes" ]; then
+	kill -HUP media_server
+	sleep 5
+	kill -9 media_server
+	kill -9 media_addon_server
+	kill -9 audio_server
+	if [ -x /bin/rescan ]; then rescan es18xx; fi
+	/system/servers/media_server >/dev/null &
+	fi
